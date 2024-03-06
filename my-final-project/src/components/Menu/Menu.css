@@ -1,0 +1,47 @@
+li {
+    color: #231F20;
+    margin: 0 10px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #000000;
+    padding: 10px 20px;
+    border: 2px solid #E9E9E9;
+}
+
+nav img {
+    width: 100px;
+    height: 40px;
+  }
+
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+nav ul li {
+     margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000000;
+  }
+
+nav ul li .active {
+    color: #C1D72F;
+}
+
+.add-button button {
+    background-color: #C1D72F;
+    color: #565B32;
+}
+
+.main-logo {
+    background-color: #E6E6E6;
+}
