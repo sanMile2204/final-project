@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import divider from '../assets/divider.png';
 import Contact from '../components/Contact-list/Contact';
+import Pagination from '../components/Pagination/Pagination';
 import  ButtonProps from '../models/ButtonsProps';
 
 interface ContactData {
@@ -60,14 +62,43 @@ const test: ContactData[] = [{
     isFavorite: false
 }]
 
-const initializeButton: ButtonProps = {
-    icon: "X",
-    text: "REMOVE",
+const favoriteButtons: ButtonProps[] = [{
+    iconImage: "/src/assets/heart.svg",
     type: "button",
-    onClick: () => ({})
-  };
+    onClick: () => ({}),
+    applyGreenColor: true
+  },  
+  {
+    iconImage: "/src/assets/delete.svg",
+    type: "button",
+    onClick: () => ({}),
+    applyGreenColor: false
+  }];
+
+  const generalButtons: ButtonProps[] = [ 
+  {
+    iconImage: "/src/assets/delete-button.svg",
+    type: "button",
+    onClick: () => ({}),
+    applyGreenColor: false
+  }, 
+  {
+    iconImage: "/src/assets/delete.svg",
+    type: "button",
+    onClick: () => ({}),
+    applyGreenColor: false
+  }];
 
 export default function Contacts() {
+
+    
+  const postsPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(1);
+
+ const handlePageChange = (pageNumber: number) => {
+   setCurrentPage(pageNumber);
+ };
+
     return (
         <section className="full-container">
             <main>
@@ -78,13 +109,16 @@ export default function Contacts() {
                 </div>
                 <div className='list-contact-container'>
                     {
-                        test.map(contact => (
-                            <Contact contact={contact} button={initializeButton}></Contact>
+                        test.map((contact, index) => (
+                            <Contact contact={contact} buttons={contact.isFavorite ? favoriteButtons : generalButtons} key={index}></Contact>
                         ))
                     }
                 </div> 
             </section>
             </main>
+            <footer>
+                <Pagination postsPerPage={postsPerPage} length={test.length} onPageChange={handlePageChange}></Pagination>
+            </footer>
         </section>
     )
 }

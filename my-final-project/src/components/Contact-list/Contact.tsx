@@ -12,17 +12,24 @@ interface ContactData {
 
   interface Props {
     contact: ContactData;
-    button: ButtonProps;
+    buttons: ButtonProps[];
   }
 
-const Contact: React.FC<Props> = ({contact, button}) => {
+const Contact: React.FC<Props> = ({contact, buttons}) => {
     return (
         <div className='contact-container'>
             <img className={contact.isFavorite ? 'round-image-favorite' : 'round-image'}  src={logo}></img>
             <label>{contact.firstName}</label>
             <span>{contact.email}</span>
             <hr className="linea-divisoria"></hr>
-            <Button text={button.text} type={button.type} onClick={button.onClick} icon={button.icon} iconImage={button.iconImage}></Button>
+            <div className='button-container'>
+            {
+              buttons.map(
+                (button, index) => (
+                  <Button key={index} text={button.text} type={button.type} onClick={button.onClick} icon={button.icon} iconImage={button.iconImage} applyGreenColor={button.applyGreenColor}></Button>
+              ))
+            }
+            </div>
         </div>
     )
 }

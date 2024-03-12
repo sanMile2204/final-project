@@ -1,6 +1,6 @@
 import './Menu.css';
 import logo from '../../assets/Logo.png';
-import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default function Menu({onClick}: {onClick: () => void}) {
 
@@ -11,9 +11,9 @@ export default function Menu({onClick}: {onClick: () => void}) {
                     <a href='/'><img src={logo} alt="logo"></img></a>
                 </div>
                 <ul>
-                    <li><a className='active' href="/overview">Overview</a></li>
-                    <li><a href="/contacts">Contacts</a></li>
-                    <li><a href="/favorites">Favorites</a></li>
+                    <li><NavLink to="/overview">Overview</NavLink></li>
+                    <li><NavLink to="/contacts">Contacts</NavLink></li>
+                    <li><NavLink to="/favorites">Favorites</NavLink></li>
                     <li className="add-button"><button onClick={onClick}>+ NEW</button></li>
                 </ul>
             </nav>

@@ -40,6 +40,9 @@ nav ul li .active {
 .add-button button {
     background-color: #C1D72F;
     color: #565B32;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .main-logo {

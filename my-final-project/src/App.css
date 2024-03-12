@@ -26,3 +26,9 @@ h1 {
   flex-wrap: wrap;
   margin: 10px;
 }
+
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

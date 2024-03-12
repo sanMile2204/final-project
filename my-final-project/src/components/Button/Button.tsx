@@ -2,9 +2,9 @@ import './Button.css';
 import  ButtonProps from '../../models/ButtonsProps';
 
 
-const Button: React.FC<ButtonProps> = ({icon, iconImage, text, type, onClick}) => {
+const Button: React.FC<ButtonProps> = ({icon, iconImage, text, type, onClick, applyGreenColor}) => {
    return( 
-    <button className="icon-button" onClick={onClick} type={type}>
+    <button className={applyGreenColor !== undefined ? applyGreenColor ? 'icon-button-green' : 'icon-button-red': 'icon-button'} onClick={onClick} type={type}>
         {
             icon ? <span className="icon">{icon}</span> :  null
         }

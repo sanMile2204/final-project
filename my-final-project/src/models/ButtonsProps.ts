@@ -3,7 +3,8 @@ interface ButtonProps {
     iconImage?: string,
     text?: string,
     type: "submit" | "reset" | "button" | undefined,
-    onClick: () => void;
+    applyGreenColor?: boolean,
+    onClick: () => void
 }
 
 export default ButtonProps;

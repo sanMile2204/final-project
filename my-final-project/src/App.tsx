@@ -1,12 +1,5 @@
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes
-} from "react-router-dom";
-import Overview from './pages/Overview';
-import Contacts from './pages/Contacts';
-import Favorites from './pages/Favorites';
+import { Outlet } from "react-router-dom";
 import Menu from './components/Menu/Menu';
 import ContactListForm from './components/Contact-list/ContactListForm';
 import { useState } from 'react';
@@ -18,16 +11,11 @@ function App() {
     <>
     <Menu onClick={() => { setShowContact(!showContact);}}></Menu>
     {
-      showContact ? <ContactListForm></ContactListForm> : null
+      showContact ? <div className='main-container'><ContactListForm></ContactListForm></div> : null
     }
-    <Router>     
-      <Routes>
-          <Route path="/overview" element={<Overview/>}></Route>
-          <Route path="/contacts" element={<Contacts/>}></Route>
-          <Route path="/favorites" element={<Favorites/>}></Route>
-          <Route path="/" element={<Overview/>}></Route>
-      </Routes>
-    </Router>
+    <main className='main'>
+      <Outlet/>
+    </main>
     </>
   )
 }

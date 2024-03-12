@@ -48,12 +48,13 @@ const test: ContactData[] = [{
     isFavorite: false
 }]
 
-const initializeButton: ButtonProps = {
+const initializeButton: ButtonProps[] = [{
     icon: "X",
     text: "REMOVE",
     type: "button",
-    onClick: () => ({})
-  };
+    onClick: () => ({}),
+    applyGreenColor: false
+  }];
 
 export default function Favorites() {
     return (
@@ -67,7 +68,7 @@ export default function Favorites() {
             <div className='list-contact-container'>
                 {
                     test.filter(x => x.isFavorite).map(contact => (
-                        <Contact contact={contact} button={initializeButton}></Contact>
+                        <Contact contact={contact} buttons={initializeButton}></Contact>
                     ))
                 }
             </div> 

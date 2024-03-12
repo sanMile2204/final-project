@@ -12,54 +12,56 @@ interface ContactData {
 const test: ContactData[] = [{
     firstName: 'Sandra Milena',
     lastName: 'Gomez Poveda',
-    email: 'sandra2test.com',
+    email: 'sandra1test.com',
     isFavorite: true
 }, 
 {
     firstName: 'Sandra Milena2',
     lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
+    email: 'sandra9test.com',
     isFavorite: false
 },
 {
     firstName: 'Sandra Milena2',
     lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
+    email: 'sandra3test.com',
     isFavorite: false
 },
 {
     firstName: 'Sandra Milena2',
     lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
+    email: 'sandra4test.com',
     isFavorite: false
 }
 ,
 {
     firstName: 'Sandra Milena2',
     lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
+    email: 'sandra5test.com',
     isFavorite: false
 }
 ,
 {
     firstName: 'Sandra Milena2',
     lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
+    email: 'sandra6test.com',
     isFavorite: false
 }]
 
-const initializeButtonFavorites: ButtonProps = {
+const initializeButtonFavorites: ButtonProps[] = [{
     icon: "X",
     text: "REMOVE",
     type: "button",
-    onClick: () => ({})
-  };
+    onClick: () => ({}),
+    applyGreenColor: false
+  }];
 
-  const initializeButtonContacts: ButtonProps = {
-    iconImage: "/src/assets/heart.png",
+  const initializeButtonContacts: ButtonProps[] = [{
+    iconImage: "/src/assets/heart.svg",
     type: "button",
-    onClick: () => ({})
-  };
+    onClick: () => ({}),
+    applyGreenColor: true
+  }];
 
 export default function Overview() {
     return (
@@ -73,7 +75,7 @@ export default function Overview() {
                 <div className='list-contact-container'>
                     {
                         test.slice(0, 4).map(contact => (
-                            <Contact contact={contact} button={initializeButtonFavorites}></Contact>
+                            <Contact contact={contact} buttons={initializeButtonFavorites} key={contact.email}></Contact>
                         ))
                     }
                 </div>  
@@ -86,7 +88,7 @@ export default function Overview() {
                 <div className='list-contact-container'>
                     {
                         test.slice(0, 6).map(contact => (
-                            <Contact contact={contact} button={initializeButtonFavorites}></Contact>
+                            <Contact contact={contact} buttons={initializeButtonContacts} key={contact.email}></Contact>
                         ))
                     }
                 </div>  
