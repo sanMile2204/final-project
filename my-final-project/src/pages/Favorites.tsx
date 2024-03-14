@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import divider from '../assets/divider.png';
 import Contact from '../components/Contact-list/Contact';
 import  ButtonProps from '../models/ButtonsProps';
-import { userContext } from '../App';
+import { UserContext } from '../App';
 
 const initializeButton: ButtonProps[] = [{
     icon: "X",
@@ -13,7 +13,7 @@ const initializeButton: ButtonProps[] = [{
   }];
 
 export default function Favorites() {
-    const {contactList, setContactList} = useContext(userContext);
+    const {contactList, setContactList} = useContext(UserContext);
     
     return (
         <section className="full-container">

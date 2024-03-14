@@ -6,7 +6,7 @@ import { createContext, useEffect, useState } from 'react';
 import { useGetUsers } from './hooks/useGetUsers';
 import { ContactData } from './models/ContactProps';
 
-export const userContext = createContext<{ contactList: ContactData[]; setContactList: React.Dispatch<React.SetStateAction<ContactData[]>> }>({ contactList: [], setContactList: () => {} });
+export const UserContext = createContext<{ contactList: ContactData[]; setContactList: React.Dispatch<React.SetStateAction<ContactData[]>> }>({ contactList: [], setContactList: () => {} });
 function App() {
   const [showContact, setShowContact] = useState(false);
   const {users, getUsers} = useGetUsers();
@@ -37,9 +37,9 @@ function App() {
       showContact ? <div className='main-container'><ContactListForm></ContactListForm></div> : null
     }
     <main className='main'>
-    <userContext.Provider value={{contactList, setContactList}}>
+    <UserContext.Provider value={{contactList, setContactList}}>
       <Outlet/>
-    </userContext.Provider>
+    </UserContext.Provider>
     </main>
     </>
   )

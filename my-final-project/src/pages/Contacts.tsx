@@ -3,13 +3,13 @@ import divider from '../assets/divider.png';
 import Contact from '../components/Contact-list/Contact';
 import Pagination from '../components/Pagination/Pagination';
 import  ButtonProps from '../models/ButtonsProps';
-import { userContext } from '../App';
+import { UserContext } from '../App';
 
 export default function Contacts() {
 
   const postsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
-  const {contactList, setContactList} = useContext(userContext);
+  const {contactList, setContactList} = useContext(UserContext);
 
   const handleClickHeartButton = (e: any) => {
     const id = e.currentTarget.id;

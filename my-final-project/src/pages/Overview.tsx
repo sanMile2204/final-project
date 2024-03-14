@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import divider from '../assets/divider.png';
 import Contact from '../components/Contact-list/Contact';
 import ButtonProps from '../models/ButtonsProps';
-import { userContext } from '../App';
+import { UserContext } from '../App';
 
 const initializeButtonFavorites: ButtonProps[] = [{
     icon: "X",
@@ -21,7 +21,7 @@ const initializeButtonFavorites: ButtonProps[] = [{
 
 export default function Overview() {
 
-    const {contactList, setContactList} = useContext(userContext);
+    const {contactList, setContactList} = useContext(UserContext);
 
     return (
         <section className="full-container">
