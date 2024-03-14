@@ -2,10 +2,33 @@ import './App.css';
 import { Outlet } from "react-router-dom";
 import Menu from './components/Menu/Menu';
 import ContactListForm from './components/Contact-list/ContactListForm';
-import { useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { useGetUsers } from './hooks/useGetUsers';
+import { ContactData } from './models/ContactProps';
 
+export const userContext = createContext<{ contactList: ContactData[]; setContactList: React.Dispatch<React.SetStateAction<ContactData[]>> }>({ contactList: [], setContactList: () => {} });
 function App() {
   const [showContact, setShowContact] = useState(false);
+  const {users, getUsers} = useGetUsers();
+  const [contactList, setContactList] = useState<ContactData[]>([]);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  useEffect(() => {
+    const newArray: ContactData[] = users.map(item => {
+      return {
+        email: item.email,
+        firstName: item.first_name,
+        lastName: item.last_name,
+        avatar: item.avatar,
+        isFavorite: false,
+        id: item.id
+      }
+    });
+    setContactList(newArray);
+  }, [users]);
 
   return (
     <>
@@ -14,7 +37,9 @@ function App() {
       showContact ? <div className='main-container'><ContactListForm></ContactListForm></div> : null
     }
     <main className='main'>
+    <userContext.Provider value={{contactList, setContactList}}>
       <Outlet/>
+    </userContext.Provider>
     </main>
     </>
   )

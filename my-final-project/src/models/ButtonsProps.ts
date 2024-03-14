@@ -4,7 +4,8 @@ interface ButtonProps {
     text?: string,
     type: "submit" | "reset" | "button" | undefined,
     applyGreenColor?: boolean,
-    onClick: () => void
+    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
+    id?: number
 }
 
 export default ButtonProps;

@@ -1,52 +1,8 @@
+import { useContext } from 'react';
 import divider from '../assets/divider.png';
 import Contact from '../components/Contact-list/Contact';
 import ButtonProps from '../models/ButtonsProps';
-
-interface ContactData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    isFavorite: boolean;
-  };
-
-const test: ContactData[] = [{
-    firstName: 'Sandra Milena',
-    lastName: 'Gomez Poveda',
-    email: 'sandra1test.com',
-    isFavorite: true
-}, 
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra9test.com',
-    isFavorite: false
-},
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra3test.com',
-    isFavorite: false
-},
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra4test.com',
-    isFavorite: false
-}
-,
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra5test.com',
-    isFavorite: false
-}
-,
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra6test.com',
-    isFavorite: false
-}]
+import { userContext } from '../App';
 
 const initializeButtonFavorites: ButtonProps[] = [{
     icon: "X",
@@ -64,6 +20,9 @@ const initializeButtonFavorites: ButtonProps[] = [{
   }];
 
 export default function Overview() {
+
+    const {contactList, setContactList} = useContext(userContext);
+
     return (
         <section className="full-container">
             <main>
@@ -74,7 +33,7 @@ export default function Overview() {
                 </div>
                 <div className='list-contact-container'>
                     {
-                        test.slice(0, 4).map(contact => (
+                        contactList.filter(x => x.isFavorite).slice(0, 4).map(contact => (
                             <Contact contact={contact} buttons={initializeButtonFavorites} key={contact.email}></Contact>
                         ))
                     }
@@ -87,7 +46,7 @@ export default function Overview() {
                 </div>
                 <div className='list-contact-container'>
                     {
-                        test.slice(0, 6).map(contact => (
+                        contactList.slice(0, 6).map(contact => (
                             <Contact contact={contact} buttons={initializeButtonContacts} key={contact.email}></Contact>
                         ))
                     }

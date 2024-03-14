@@ -1,23 +1,18 @@
 import { useState } from "react";
 import Button from "../Button/Button";
 import './Contact.css';
-
-interface FormData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    isFavorite: boolean;
-  };
+import { ContactData } from "../../models/ContactProps";
 
   const initialFormData = {
     firstName: '',
     lastName: '',
     email: '',
     isFavorite: false,
+    id: 0
   };
 
 export default function ContactListForm() {
-    const [formData, setFormData] = useState<FormData>(initialFormData);
+    const [formData, setFormData] = useState<ContactData>(initialFormData);
 
     const handleChange = (e: any) => {
         const { name, value, type, checked } = e.target;

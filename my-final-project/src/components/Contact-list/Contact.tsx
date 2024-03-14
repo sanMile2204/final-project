@@ -1,24 +1,12 @@
 import './Contact.css';
 import logo from '../../assets/Logo.png';
 import Button from '../Button/Button';
-import  ButtonProps from '../../models/ButtonsProps';
+import { ContactProps } from '../../models/ContactProps';
 
-interface ContactData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    isFavorite: boolean;
-  };
-
-  interface Props {
-    contact: ContactData;
-    buttons: ButtonProps[];
-  }
-
-const Contact: React.FC<Props> = ({contact, buttons}) => {
+const Contact: React.FC<ContactProps> = ({contact, buttons}) => {
     return (
         <div className='contact-container'>
-            <img className={contact.isFavorite ? 'round-image-favorite' : 'round-image'}  src={logo}></img>
+            <img className={contact.isFavorite ? 'round-image-favorite' : 'round-image'}  src={contact.avatar ? contact.avatar : logo}></img>
             <label>{contact.firstName}</label>
             <span>{contact.email}</span>
             <hr className="linea-divisoria"></hr>
@@ -26,7 +14,14 @@ const Contact: React.FC<Props> = ({contact, buttons}) => {
             {
               buttons.map(
                 (button, index) => (
-                  <Button key={index} text={button.text} type={button.type} onClick={button.onClick} icon={button.icon} iconImage={button.iconImage} applyGreenColor={button.applyGreenColor}></Button>
+                  <Button key={index} 
+                  text={button.text} 
+                  type={button.type} 
+                  onClick={button.onClick} 
+                  icon={button.icon} 
+                  iconImage={button.iconImage} 
+                  applyGreenColor={button.applyGreenColor}
+                  id={contact.id}></Button>
               ))
             }
             </div>

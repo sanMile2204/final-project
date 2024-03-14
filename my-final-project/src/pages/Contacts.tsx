@@ -1,77 +1,57 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import divider from '../assets/divider.png';
 import Contact from '../components/Contact-list/Contact';
 import Pagination from '../components/Pagination/Pagination';
 import  ButtonProps from '../models/ButtonsProps';
+import { userContext } from '../App';
 
-interface ContactData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    isFavorite: boolean;
-  };
+export default function Contacts() {
 
-const test: ContactData[] = [{
-    firstName: 'Sandra Milena',
-    lastName: 'Gomez Poveda',
-    email: 'sandra2test.com',
-    isFavorite: true
-}, 
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
-    isFavorite: false
-},
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
-    isFavorite: false
-},
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
-    isFavorite: false
-}
-,
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
-    isFavorite: false
-}
-,
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
-    isFavorite: false
-},
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
-    isFavorite: false
-},
-{
-    firstName: 'Sandra Milena2',
-    lastName: 'Gomez Poveda2',
-    email: 'sandra2test.com',
-    isFavorite: false
-}]
+  const postsPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(1);
+  const {contactList, setContactList} = useContext(userContext);
 
-const favoriteButtons: ButtonProps[] = [{
+  const handleClickHeartButton = (e: any) => {
+    const id = e.currentTarget.id;
+
+    const contactListCopy = contactList.map(contact => {
+      if(contact.id === Number(id)) {
+        return {...contact, isFavorite: true}
+      }
+      return contact;
+    });
+    setContactList(contactListCopy);
+   }
+
+   const handleClickDeleteButton = (e: any) => {
+    const id = e.currentTarget.id;
+
+    const contactListCopy = contactList.map(contact => {
+      if(contact.id === Number(id)) {
+        return {...contact, isFavorite: false}
+      }
+      return contact;
+    });
+    setContactList(contactListCopy);
+   }
+
+   const handleClickRemoveButton = (e: any) => {
+    const id = e.currentTarget.id;
+    const contactListCopy = contactList.filter(contact => contact.id !== Number(id));
+    setContactList(contactListCopy);
+   }
+
+
+  const favoriteButtons: ButtonProps[] = [{
     iconImage: "/src/assets/heart.svg",
     type: "button",
-    onClick: () => ({}),
+    onClick: handleClickHeartButton,
     applyGreenColor: true
   },  
   {
     iconImage: "/src/assets/delete.svg",
     type: "button",
-    onClick: () => ({}),
+    onClick: handleClickRemoveButton,
     applyGreenColor: false
   }];
 
@@ -79,21 +59,15 @@ const favoriteButtons: ButtonProps[] = [{
   {
     iconImage: "/src/assets/delete-button.svg",
     type: "button",
-    onClick: () => ({}),
+    onClick: handleClickDeleteButton,
     applyGreenColor: false
   }, 
   {
     iconImage: "/src/assets/delete.svg",
     type: "button",
-    onClick: () => ({}),
+    onClick: handleClickRemoveButton,
     applyGreenColor: false
   }];
-
-export default function Contacts() {
-
-    
-  const postsPerPage = 4;
-  const [currentPage, setCurrentPage] = useState(1);
 
  const handlePageChange = (pageNumber: number) => {
    setCurrentPage(pageNumber);
@@ -109,15 +83,15 @@ export default function Contacts() {
                 </div>
                 <div className='list-contact-container'>
                     {
-                        test.map((contact, index) => (
-                            <Contact contact={contact} buttons={contact.isFavorite ? favoriteButtons : generalButtons} key={index}></Contact>
+                        contactList.map((contact, index) => (
+                            <Contact contact={contact} buttons={contact.isFavorite ? generalButtons : favoriteButtons} key={index}></Contact>
                         ))
                     }
                 </div> 
             </section>
             </main>
             <footer>
-                <Pagination postsPerPage={postsPerPage} length={test.length} onPageChange={handlePageChange}></Pagination>
+                <Pagination postsPerPage={postsPerPage} length={contactList.length} onPageChange={handlePageChange}></Pagination>
             </footer>
         </section>
     )
