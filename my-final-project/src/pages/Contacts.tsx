@@ -1,73 +1,48 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import divider from '../assets/divider.png';
 import Contact from '../components/Contact-list/Contact';
 import Pagination from '../components/Pagination/Pagination';
-import  ButtonProps from '../models/ButtonsProps';
-import { UserContext } from '../App';
+import  ButtonProps, { addFavoriteButton, deleteButton, removeButton } from '../components/Button/ButtonsProps';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, addDispatch } from '../store/store';
+import { ContactData, markAsFavorite, removeAsFavorite, removeContact } from '../store/features/ContactSlice';
 
 export default function Contacts() {
 
-  const postsPerPage = 4;
+  //pagination
+  const postsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
-  const {contactList, setContactList} = useContext(UserContext);
+  const total = postsPerPage * currentPage;
+  const initial = total - postsPerPage;
+  const final = total;
 
-  const handleClickHeartButton = (e: any) => {
+  //contact list
+  const contactList: ContactData[] = useSelector(
+    (state: RootState) => state.contacts.contacts
+  );
+  const dispatch: addDispatch  = useDispatch();
+
+  //config buttons
+  const handleAddFavoriteButton = (e: any) => {
     const id = e.currentTarget.id;
-
-    const contactListCopy = contactList.map(contact => {
-      if(contact.id === Number(id)) {
-        return {...contact, isFavorite: true}
-      }
-      return contact;
-    });
-    setContactList(contactListCopy);
+    dispatch(markAsFavorite(id));
    }
 
-   const handleClickDeleteButton = (e: any) => {
+   const handleRemoveFavoriteButton = (e: any) => {
     const id = e.currentTarget.id;
-
-    const contactListCopy = contactList.map(contact => {
-      if(contact.id === Number(id)) {
-        return {...contact, isFavorite: false}
-      }
-      return contact;
-    });
-    setContactList(contactListCopy);
+    dispatch(removeAsFavorite(id));
    }
 
    const handleClickRemoveButton = (e: any) => {
     const id = e.currentTarget.id;
-    const contactListCopy = contactList.filter(contact => contact.id !== Number(id));
-    setContactList(contactListCopy);
+    dispatch(removeContact(id));
    }
 
-
-  const favoriteButtons: ButtonProps[] = [{
-    iconImage: "/src/assets/heart.svg",
-    type: "button",
-    onClick: handleClickHeartButton,
-    applyGreenColor: true
-  },  
-  {
-    iconImage: "/src/assets/delete.svg",
-    type: "button",
-    onClick: handleClickRemoveButton,
-    applyGreenColor: false
-  }];
-
-  const generalButtons: ButtonProps[] = [ 
-  {
-    iconImage: "/src/assets/delete-button.svg",
-    type: "button",
-    onClick: handleClickDeleteButton,
-    applyGreenColor: false
-  }, 
-  {
-    iconImage: "/src/assets/delete.svg",
-    type: "button",
-    onClick: handleClickRemoveButton,
-    applyGreenColor: false
-  }];
+   addFavoriteButton.onClick = handleAddFavoriteButton;
+   deleteButton.onClick = handleClickRemoveButton;
+   removeButton.onClick = handleRemoveFavoriteButton;
+  const favoriteButtons: ButtonProps[] = [addFavoriteButton, deleteButton];
+  const generalButtons: ButtonProps[] = [removeButton, deleteButton];
 
  const handlePageChange = (pageNumber: number) => {
    setCurrentPage(pageNumber);
@@ -83,15 +58,24 @@ export default function Contacts() {
                 </div>
                 <div className='list-contact-container'>
                     {
-                        contactList.map((contact, index) => (
+                      contactList.length > postsPerPage ?
+                        contactList.slice(initial, final).map((contact, index) => (
                             <Contact contact={contact} buttons={contact.isFavorite ? generalButtons : favoriteButtons} key={index}></Contact>
-                        ))
+                        )) :
+                        contactList.map((contact, index) => (
+                          <Contact contact={contact} buttons={contact.isFavorite ? generalButtons : favoriteButtons} key={index}></Contact>
+                      ))
                     }
                 </div> 
             </section>
             </main>
             <footer>
-                <Pagination postsPerPage={postsPerPage} length={contactList.length} onPageChange={handlePageChange}></Pagination>
+              {
+                contactList.length > postsPerPage ? 
+                <Pagination postsPerPage={postsPerPage} length={contactList.length} onPageChange={handlePageChange}></Pagination> :
+                null
+              }
+                
             </footer>
         </section>
     )

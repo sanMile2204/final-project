@@ -1,7 +1,7 @@
 import './Contact.css';
 import logo from '../../assets/Logo.png';
 import Button from '../Button/Button';
-import { ContactProps } from '../../models/ContactProps';
+import { ContactProps } from './ContactProps';
 
 const Contact: React.FC<ContactProps> = ({contact, buttons}) => {
     return (

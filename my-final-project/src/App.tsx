@@ -2,33 +2,19 @@ import './App.css';
 import { Outlet } from "react-router-dom";
 import Menu from './components/Menu/Menu';
 import ContactListForm from './components/Contact-list/ContactListForm';
-import { createContext, useEffect, useState } from 'react';
-import { useGetUsers } from './hooks/useGetUsers';
-import { ContactData } from './models/ContactProps';
+import { useEffect, useState } from 'react';
+import { fetchDataFromApi } from './store/features/ContactSlice';
+import { useDispatch } from 'react-redux';
+import { addDispatch } from './store/store';
 
-export const UserContext = createContext<{ contactList: ContactData[]; setContactList: React.Dispatch<React.SetStateAction<ContactData[]>> }>({ contactList: [], setContactList: () => {} });
+
 function App() {
   const [showContact, setShowContact] = useState(false);
-  const {users, getUsers} = useGetUsers();
-  const [contactList, setContactList] = useState<ContactData[]>([]);
+  const dispatch: addDispatch  = useDispatch();
 
   useEffect(() => {
-    getUsers();
-  }, []);
-
-  useEffect(() => {
-    const newArray: ContactData[] = users.map(item => {
-      return {
-        email: item.email,
-        firstName: item.first_name,
-        lastName: item.last_name,
-        avatar: item.avatar,
-        isFavorite: false,
-        id: item.id
-      }
-    });
-    setContactList(newArray);
-  }, [users]);
+    dispatch(fetchDataFromApi());
+  }, [dispatch]);
 
   return (
     <>
@@ -37,9 +23,7 @@ function App() {
       showContact ? <div className='main-container'><ContactListForm></ContactListForm></div> : null
     }
     <main className='main'>
-    <UserContext.Provider value={{contactList, setContactList}}>
       <Outlet/>
-    </UserContext.Provider>
     </main>
     </>
   )

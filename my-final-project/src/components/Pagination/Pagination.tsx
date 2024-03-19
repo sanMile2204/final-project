@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PaginationProps from '../../models/PaginationProps';
+import PaginationProps from './PaginationProps';
 import './Pagination.css';
 
 const Paginator: React.FC<PaginationProps> = ({ length, postsPerPage, onPageChange }) => {

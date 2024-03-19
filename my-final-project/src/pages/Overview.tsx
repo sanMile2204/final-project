@@ -1,27 +1,34 @@
-import { useContext } from 'react';
 import divider from '../assets/divider.png';
 import Contact from '../components/Contact-list/Contact';
-import ButtonProps from '../models/ButtonsProps';
-import { UserContext } from '../App';
+import ButtonProps, { addFavoriteButton, removeFavoriteButton } from '../components/Button/ButtonsProps';
+import { ContactData, markAsFavorite, removeAsFavorite } from '../store/features/ContactSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, addDispatch } from '../store/store';
 
-const initializeButtonFavorites: ButtonProps[] = [{
-    icon: "X",
-    text: "REMOVE",
-    type: "button",
-    onClick: () => ({}),
-    applyGreenColor: false
-  }];
-
-  const initializeButtonContacts: ButtonProps[] = [{
-    iconImage: "/src/assets/heart.svg",
-    type: "button",
-    onClick: () => ({}),
-    applyGreenColor: true
-  }];
 
 export default function Overview() {
 
-    const {contactList, setContactList} = useContext(UserContext);
+    //contact list
+    const contactList: ContactData[] = useSelector(
+        (state: RootState) => state.contacts.contacts
+      );
+    const dispatch: addDispatch  = useDispatch();
+
+    //config buttons
+    const handleAddFavoriteButton = (e: any) => {
+        const id = e.currentTarget.id;
+        dispatch(markAsFavorite(id));
+    }
+
+    const handleRemoveFavoriteButton = (e: any) => {
+        const id = e.currentTarget.id;
+        dispatch(removeAsFavorite(id));
+    }
+
+    addFavoriteButton.onClick = handleAddFavoriteButton;
+    removeFavoriteButton.onClick = handleRemoveFavoriteButton;
+    const initializeButtonContacts: ButtonProps[] = [addFavoriteButton];
+    const initializeButtonFavorites: ButtonProps[] = [removeFavoriteButton];
 
     return (
         <section className="full-container">
