@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, addDispatch } from '../store/store';
 import { useState } from 'react';
 import Pagination from '../components/Pagination/Pagination';
-import { useSessionStorage } from '../hooks/useSessionStorage';
 
 export default function Favorites() {
 
@@ -21,8 +20,7 @@ export default function Favorites() {
     const contactList: ContactData[] = useSelector(
         (state: RootState) => state.contacts.contacts
       );
-    //   const dispatch: addDispatch  = useDispatch();
-      const [mySliceState, dispatch] = useSessionStorage('mySlice');
+    const dispatch: addDispatch  = useDispatch();
 
     //config buttons
     const handleRemoveFavoriteButton = (e: any) => {

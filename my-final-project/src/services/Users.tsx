@@ -14,8 +14,11 @@ const GetUsersData = async() => {
 }
 
 export const MapContactsData = async() => {
-    const storedJson = sessionStorage.getItem("contactList");
-    if (storedJson) return JSON.parse(storedJson);
+    const storedJson = sessionStorage.getItem("reduxContactList");
+    if (storedJson) {
+        const contactData: ContactData[] = JSON.parse(storedJson);
+        return contactData;
+    }
     const users = await GetUsersData();
         const contacts: ContactData[] = users.map((item: UserData) => {
             return {
@@ -28,6 +31,6 @@ export const MapContactsData = async() => {
             }
           });
     const json = JSON.stringify(contacts);
-    sessionStorage.setItem("contactList", json);
+    sessionStorage.setItem("reduxContactList", json);
     return contacts;
 }
