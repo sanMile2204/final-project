@@ -31,6 +31,6 @@ export const MapContactsData = async() => {
             }
           });
     const json = JSON.stringify(contacts);
-    sessionStorage.setItem("reduxContactList", json);
+    sessionStorage.setItem("reduxContactList", json);    
     return contacts;
 }

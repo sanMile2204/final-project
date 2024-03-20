@@ -44,6 +44,9 @@ export default function Favorites() {
                 <img src={divider} title="divider" className='divider'></img>
             </div>
             <div className='list-contact-container'>
+              {
+                contactList.filter(x => x.isFavorite).length == 0 ? <h2>There are no favorites</h2> : null
+              }
                 {
                     contactList.filter(x => x.isFavorite).length > postsPerPage ?
                     contactList.slice(initial, final).filter(x => x.isFavorite).map((contact, index) => (

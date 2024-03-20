@@ -40,6 +40,9 @@ export default function Overview() {
                 </div>
                 <div className='list-contact-container'>
                     {
+                        contactList.filter(x => x.isFavorite).length == 0 ? <h2>There are no favorites</h2> : null
+                    }
+                    {
                         contactList.filter(x => x.isFavorite).slice(0, 4).map(contact => (
                             <Contact contact={contact} buttons={initializeButtonFavorites} key={contact.email}></Contact>
                         ))
