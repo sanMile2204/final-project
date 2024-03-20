@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PaginationProps from './PaginationProps';
 import './Pagination.css';
 
-const Paginator: React.FC<PaginationProps> = ({ length, postsPerPage, onPageChange }) => {
+const Paginator: React.FC<PaginationProps> = ({ length, postsPerPage, onPageChange, currentPageExternal }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(length / postsPerPage);
+  let totalPages = Math.ceil(length / postsPerPage);
+
+  useEffect(() => {
+    setCurrentPage(currentPageExternal);
+  }, [currentPageExternal])
 
   const handlePrevPage = () => {
     if (currentPage > 1) {

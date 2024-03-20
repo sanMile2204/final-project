@@ -4,14 +4,9 @@ import './Contact.css';
 import { addDispatch } from "../../store/store";
 import { useDispatch } from "react-redux";
 import { ContactData, addContact } from "../../store/features/ContactSlice";
+import { initialFormData } from "./ContactProps";
+import { isText, isValid, isValidEmail } from "./validations";
 
-  const initialFormData = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    isFavorite: false,
-    id: 0
-  };
 
 export default function ContactListForm() {
     const dispatch: addDispatch  = useDispatch();
@@ -23,11 +18,23 @@ export default function ContactListForm() {
         setFormData((prevState: any) => ({
           ...prevState,
           [name]: type === 'checkbox' ? checked : value
-        }));
+        }));        
       };
     
     const handleSubmit = async(e: any) => {
         e.preventDefault();
+
+        if (!isValid(formData)) {
+          setPostError('Please fill in all required fields.');
+          return;
+        } else if ((!isText(formData.firstName)) || (!isText(formData.lastName))) {
+          setPostError('Please enter just text.');
+          return;
+        } else if (!isValidEmail(formData.email)) {
+          setPostError('Please enter a valid email address.');
+          return;
+        }
+
         const newContact: ContactData = {
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -45,8 +52,8 @@ export default function ContactListForm() {
         <section className="container">
             <form className="container-form" onSubmit={handleSubmit}>
             {
-            postError ? <p className="saveMessage"> {postError}</p> : null
-          }
+              postError ? <p className="saveMessage"> {postError}</p> : null
+            }
                 <input
                 type="text" 
                 placeholder="First name" 

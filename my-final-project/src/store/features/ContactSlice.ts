@@ -30,7 +30,7 @@ export const ContactSlice = createSlice({
         email: action.payload.email,
         isFavorite: action.payload.isFavorite,
         avatar: action.payload.avatar,
-        id: state.contacts.length,
+        id: state.contacts.length + 1 ,
       });
     },
     markAsFavorite: (state, action: PayloadAction<number>) => {

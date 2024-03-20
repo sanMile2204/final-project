@@ -36,6 +36,8 @@ export default function Contacts() {
    const handleClickRemoveButton = (e: any) => {
     const id = e.currentTarget.id;
     dispatch(removeContact(id));
+    const totalElements = Math.ceil((contactList.length -1) / postsPerPage);
+    if (totalElements < currentPage) setCurrentPage(currentPage - 1);
    }
 
    addFavoriteButton.onClick = handleAddFavoriteButton;
@@ -72,7 +74,7 @@ export default function Contacts() {
             <footer>
               {
                 contactList.length > postsPerPage ? 
-                <Pagination postsPerPage={postsPerPage} length={contactList.length} onPageChange={handlePageChange}></Pagination> :
+                <Pagination postsPerPage={postsPerPage} length={contactList.length} onPageChange={handlePageChange} currentPageExternal={currentPage}></Pagination> :
                 null
               }
                 

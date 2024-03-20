@@ -19,7 +19,6 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchDataFromApi());
-    console.log(loading);
   }, [dispatch]);
 
   useEffect(() => {

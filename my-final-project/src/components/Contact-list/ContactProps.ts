@@ -5,3 +5,11 @@ import ButtonProps from "../Button/ButtonsProps";
     contact: ContactData;
     buttons: ButtonProps[];
   }
+
+  export const initialFormData = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    isFavorite: false,
+    id: 0
+  };

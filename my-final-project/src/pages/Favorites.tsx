@@ -4,7 +4,7 @@ import  ButtonProps, { removeFavoriteButton } from '../components/Button/Buttons
 import { ContactData, removeAsFavorite } from '../store/features/ContactSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, addDispatch } from '../store/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Pagination from '../components/Pagination/Pagination';
 
 export default function Favorites() {
@@ -21,11 +21,14 @@ export default function Favorites() {
         (state: RootState) => state.contacts.contacts
       );
     const dispatch: addDispatch  = useDispatch();
+    const favoritesList = contactList.filter(x => x.isFavorite);
 
     //config buttons
     const handleRemoveFavoriteButton = (e: any) => {
         const id = e.currentTarget.id;
         dispatch(removeAsFavorite(id));
+        const totalElements = Math.ceil((favoritesList.length -1) / postsPerPage);
+        if (totalElements < currentPage) setCurrentPage(currentPage - 1);
     }
 
     removeFavoriteButton.onClick = handleRemoveFavoriteButton;
@@ -45,14 +48,14 @@ export default function Favorites() {
             </div>
             <div className='list-contact-container'>
               {
-                contactList.filter(x => x.isFavorite).length == 0 ? <h2>There are no favorites</h2> : null
+                favoritesList.length == 0 ? <h2>There are no favorites</h2> : null
               }
                 {
-                    contactList.filter(x => x.isFavorite).length > postsPerPage ?
-                    contactList.slice(initial, final).filter(x => x.isFavorite).map((contact, index) => (
+                    favoritesList.length > postsPerPage ?
+                    favoritesList.slice(initial, final).map((contact, index) => (
                         <Contact key={index} contact={contact} buttons={initializeButton}></Contact>
                     )) :
-                    contactList.filter(x => x.isFavorite).map((contact, index) => (
+                    favoritesList.map((contact, index) => (
                         <Contact key={index} contact={contact} buttons={initializeButton}></Contact>
                     ))
                 }
@@ -61,8 +64,8 @@ export default function Favorites() {
         </main>
         <footer>
               {
-                contactList.filter(x => x.isFavorite).length > postsPerPage ? 
-                <Pagination postsPerPage={postsPerPage} length={contactList.length} onPageChange={handlePageChange}></Pagination> :
+                favoritesList.length > postsPerPage ? 
+                <Pagination postsPerPage={postsPerPage} length={favoritesList.length} onPageChange={handlePageChange} currentPageExternal={currentPage}></Pagination> :
                 null
               }
                 
