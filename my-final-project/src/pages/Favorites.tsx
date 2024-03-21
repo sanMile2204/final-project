@@ -4,7 +4,7 @@ import  ButtonProps, { removeFavoriteButton } from '../components/Button/Buttons
 import { ContactData, removeAsFavorite } from '../store/features/ContactSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, addDispatch } from '../store/store';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Pagination from '../components/Pagination/Pagination';
 
 export default function Favorites() {

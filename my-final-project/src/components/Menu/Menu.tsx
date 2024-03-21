@@ -8,7 +8,7 @@ export default function Menu({onClick}: {onClick: () => void}) {
         <header>
             <nav>
                 <div className='main-logo'>
-                    <a href='/'><img src={logo} alt="logo"></img></a>
+                    <NavLink to="/overview"><img src={logo} alt="logo"></img></NavLink>
                 </div>
                 <ul>
                     <li><NavLink to="/overview">Overview</NavLink></li>
