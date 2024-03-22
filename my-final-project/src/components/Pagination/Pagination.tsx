@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import PaginationProps from './PaginationProps';
 import './Pagination.css';
+
+interface PaginationProps {
+  postsPerPage: number, 
+  length: number, 
+  onPageChange: (pageNumber: number) => void,
+  currentPageExternal: number
+}
 
 const Paginator: React.FC<PaginationProps> = ({ length, postsPerPage, onPageChange, currentPageExternal }) => {
   const [currentPage, setCurrentPage] = useState(1);

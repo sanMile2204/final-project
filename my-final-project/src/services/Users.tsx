@@ -1,5 +1,12 @@
-import { UserData } from "../components/Contact-list/UserData";
 import { ContactData } from "../store/features/ContactSlice";
+
+export interface UserData {
+    id: number;
+    email: string;
+    first_name: string;
+    last_name: string;
+    avatar: string;
+  };
 
 const GetUsersData = async() => {
     try {
