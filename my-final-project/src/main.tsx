@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Overview from './pages/Overview.tsx'
 import Contacts from './pages/Contacts.tsx'
 import Favorites from './pages/Favorites.tsx'
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Overview/>
+        element: <Navigate to="/overview" />
       },
       {
         path: '/overview',

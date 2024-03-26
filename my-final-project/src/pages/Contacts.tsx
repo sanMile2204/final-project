@@ -6,6 +6,7 @@ import  ButtonProps, { addFavoriteButton, deleteButton, removeButton } from '../
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, addDispatch } from '../store/store';
 import { ContactData, markAsFavorite, removeAsFavorite, removeContact } from '../store/features/ContactSlice';
+import Modal from '../components/Modal/Modal';
 
 export default function Contacts() {
 
@@ -21,6 +22,9 @@ export default function Contacts() {
     (state: RootState) => state.contacts.contacts
   );
   const dispatch: addDispatch  = useDispatch();
+  const pageItems = contactList.slice(initial, final);
+  const [elementId, setElementId] = useState(0);
+  const [showDialog, setShowDialog] = useState(false);
 
   //config buttons
   const handleAddFavoriteButton = (e: any) => {
@@ -35,9 +39,8 @@ export default function Contacts() {
 
    const handleClickRemoveButton = (e: any) => {
     const id = e.currentTarget.id;
-    dispatch(removeContact(id));
-    const totalElements = Math.ceil((contactList.length -1) / postsPerPage);
-    if (totalElements < currentPage) setCurrentPage(currentPage - 1);
+      setElementId(id);
+      setShowDialog(true);
    }
 
    addFavoriteButton.onClick = handleAddFavoriteButton;
@@ -50,6 +53,17 @@ export default function Contacts() {
    setCurrentPage(pageNumber);
  };
 
+ const ConfirmRemoveFavoriteButton = () => {
+  dispatch(removeContact(elementId));
+  const totalElements = Math.ceil((contactList.length -1) / postsPerPage);
+    if (totalElements < currentPage) setCurrentPage(currentPage - 1);
+    setShowDialog(false);
+}
+
+const CancelRemoveFavoriteButton = () => {
+  setShowDialog(false);
+}
+
     return (
         <section className="full-container">
             <main>
@@ -61,7 +75,7 @@ export default function Contacts() {
                 <div className='list-contact-container'>
                     {
                       contactList.length > postsPerPage ?
-                        contactList.slice(initial, final).map((contact, index) => (
+                      pageItems.map((contact, index) => (
                             <Contact contact={contact} buttons={contact.isFavorite ? generalButtons : favoriteButtons} key={index}></Contact>
                         )) :
                         contactList.map((contact, index) => (
@@ -76,6 +90,11 @@ export default function Contacts() {
                 contactList.length > postsPerPage ? 
                 <Pagination postsPerPage={postsPerPage} length={contactList.length} onPageChange={handlePageChange} currentPageExternal={currentPage}></Pagination> :
                 null
+              }
+              {
+                showDialog && (
+                  <Modal onClickConfirm={ConfirmRemoveFavoriteButton} onClickCancel={CancelRemoveFavoriteButton} text='¿Are you sure want to delete this contact?'></Modal>
+                )
               }
                 
             </footer>

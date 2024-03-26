@@ -22,13 +22,14 @@ export default function Favorites() {
       );
     const dispatch: addDispatch  = useDispatch();
     const favoritesList = contactList.filter(x => x.isFavorite);
+    const pageItems = favoritesList.slice(initial, final);
 
     //config buttons
     const handleRemoveFavoriteButton = (e: any) => {
-        const id = e.currentTarget.id;
+      const id = e.currentTarget.id;
         dispatch(removeAsFavorite(id));
-        const totalElements = Math.ceil((favoritesList.length -1) / postsPerPage);
-        if (totalElements < currentPage) setCurrentPage(currentPage - 1);
+      const totalElements = Math.ceil((favoritesList.length -1) / postsPerPage);
+      if (totalElements < currentPage) setCurrentPage(currentPage - 1);
     }
 
     removeFavoriteButton.onClick = handleRemoveFavoriteButton;
@@ -52,12 +53,13 @@ export default function Favorites() {
               }
                 {
                     favoritesList.length > postsPerPage ?
-                    favoritesList.slice(initial, final).map((contact, index) => (
+                    pageItems.map((contact, index) => (
                         <Contact key={index} contact={contact} buttons={initializeButton}></Contact>
                     )) :
                     favoritesList.map((contact, index) => (
                         <Contact key={index} contact={contact} buttons={initializeButton}></Contact>
                     ))
+                    
                 }
             </div> 
         </section>
@@ -67,8 +69,7 @@ export default function Favorites() {
                 favoritesList.length > postsPerPage ? 
                 <Pagination postsPerPage={postsPerPage} length={favoritesList.length} onPageChange={handlePageChange} currentPageExternal={currentPage}></Pagination> :
                 null
-              }
-                
+              }                
             </footer>
         </section>
     )
